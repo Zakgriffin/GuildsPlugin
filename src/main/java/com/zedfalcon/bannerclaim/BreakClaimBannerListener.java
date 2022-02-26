@@ -17,9 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 
 public class BreakClaimBannerListener implements Listener {
     @EventHandler
@@ -38,14 +36,14 @@ public class BreakClaimBannerListener implements Listener {
             Guild guild = guildClaimPair.guild();
             Claim claim = guildClaimPair.claim();
 
-            if(!claim.bannerBlock().equals(block)) continue;
+            if (!claim.bannerBlock().equals(block)) continue;
 
             guild.removeClaim(claim);
             // TODO OH NO NO NO NO NO NO
             Bukkit.getScheduler().runTaskLater(BannerClaim.getPlugin(), () -> {
                 Collection<Entity> nearbyItems = world.getNearbyEntities(block.getLocation(), 1, 1, 1, (e) -> e instanceof Item);
-                for(Entity entity : nearbyItems) {
-                    if(entity.getName().contains("Banner")) {
+                for (Entity entity : nearbyItems) {
+                    if (entity.getName().contains("Banner")) {
                         entity.remove();
                     }
                 }

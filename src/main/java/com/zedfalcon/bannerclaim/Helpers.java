@@ -3,15 +3,14 @@ package com.zedfalcon.bannerclaim;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Set;
 import java.util.function.Consumer;
 
-record GuildClaimPair(Guild guild, Claim claim) {}
+record GuildClaimPair(Guild guild, Claim claim) {
+}
 
 
 public class Helpers {
@@ -42,21 +41,6 @@ public class Helpers {
             }
         }
     }
-
-    public static Set<Block> getAdjacentBlocks(Block block) {
-        return Set.of(
-                block.getRelative(BlockFace.UP),
-                block.getRelative(BlockFace.DOWN),
-                block.getRelative(BlockFace.WEST),
-                block.getRelative(BlockFace.EAST),
-                block.getRelative(BlockFace.NORTH),
-                block.getRelative(BlockFace.SOUTH)
-        );
-    }
-
-//    public static boolean isBlackBanner(Material material) {
-//        return material == Material.BLACK_BANNER || material == Material.BLACK_WALL_BANNER;
-//    }
 
     public static void forChunksInRadius(Block block, int chunkRadius, Consumer<Chunk> f) {
         for (int chX = -chunkRadius; chX <= chunkRadius; chX++) {

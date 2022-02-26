@@ -61,21 +61,3 @@ public class ClaimVisualization {
         }
     }
 }
-
-//    showClaimCorner(player, world, x, y, z, 1, 1);
-//        showClaimCorner(player, world, x, y, z, 1, -1);
-//        showClaimCorner(player, world, x, y, z, -1, 1);
-//        showClaimCorner(player, world, x, y, z, -1, -1);
-
-//    private void showClaimCorner(Player player, World world, int x, int y, int z, int xSign, int zSign) {
-//        int height = 10;
-//        for (int dy = -height; dy < height; dy++) {
-//            player.sendBlockChange(new Location(world, x + CLAIM_RADIUS * xSign, y + dy, z + CLAIM_RADIUS * zSign), Material.BLUE_STAINED_GLASS_PANE.createBlockData());
-//            player.sendBlockChange(new Location(world, x + CLAIM_RADIUS * xSign - xSign, y + dy, z + CLAIM_RADIUS * zSign), Material.BLUE_STAINED_GLASS_PANE.createBlockData());
-//            player.sendBlockChange(new Location(world, x + CLAIM_RADIUS * xSign, y + dy, z + CLAIM_RADIUS * zSign - zSign), Material.BLUE_STAINED_GLASS_PANE.createBlockData());
-//        }
-//    }
-//    private void showClaimParticle(World world, int x, int y, int z) {
-//        Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 0, 0), 1);
-//        world.spawnParticle(Particle.REDSTONE, x, y, z, 50, 0, 5, 0, dust);
-//    }

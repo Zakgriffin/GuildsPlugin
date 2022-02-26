@@ -3,7 +3,6 @@ package com.zedfalcon.bannerclaim;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import org.bukkit.block.Block;
 
 import java.util.List;
 import java.util.UUID;
@@ -88,7 +87,7 @@ public class Guild {
     }
 
     public void delete() {
-        for(int i = claims.size() - 1; i >= 0; i--) {
+        for (int i = claims.size() - 1; i >= 0; i--) {
             this.claims.get(i).getBannerBlock().breakNaturally();
         }
     }

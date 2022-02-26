@@ -11,7 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-record PlayerGuildInvite(UUID playerId, Guild guild) {}
+record PlayerGuildInvite(UUID playerId, Guild guild) {
+}
 
 public class GuildCommand implements CommandExecutor {
     private final List<PlayerGuildInvite> playerGuildInvites;
@@ -27,7 +28,7 @@ public class GuildCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) return false;
         if (args.length == 0) {
             Guild guild = BannerClaim.getGuildManager().guildOfPlayer(player.getUniqueId());
-            if(guild == null) {
+            if (guild == null) {
                 player.sendMessage(ChatColor.RED + "You are not part of a guild");
                 return true;
             }
@@ -72,7 +73,7 @@ public class GuildCommand implements CommandExecutor {
                 Optional<ClaimBannerTier> optionClaimBannerTier = Arrays.stream(BannerClaim.CLAIM_BANNER_TIERS)
                         .filter(t -> t.name().toLowerCase().equals(tierName)).findAny();
 
-                if(optionClaimBannerTier.isEmpty()) {
+                if (optionClaimBannerTier.isEmpty()) {
                     player.sendMessage(ChatColor.RED + "That is not a valid claim banner tier");
                 } else {
                     ClaimBannerTier tier = optionClaimBannerTier.get();
@@ -92,18 +93,18 @@ public class GuildCommand implements CommandExecutor {
             }
             case "leave" -> {
                 Guild guild = BannerClaim.getGuildManager().guildOfPlayer(player.getUniqueId());
-                if(guild == null) {
+                if (guild == null) {
                     player.sendMessage(ChatColor.RED + "You are not part of a guild");
                     return true;
                 }
-                if(pendingGuildDisbanding.contains(guild)) {
+                if (pendingGuildDisbanding.contains(guild)) {
                     guild.removeMember(player.getUniqueId());
                     BannerClaim.getGuildManager().removeGuild(guild);
                     player.sendMessage(ChatColor.GREEN + "" + guild.getName() + " has been disbanded. All claim banners have been broken");
                     pendingGuildDisbanding.remove(guild);
                     return true;
                 }
-                if(guild.numberOfMembers() == 1) {
+                if (guild.numberOfMembers() == 1) {
                     player.sendMessage(ChatColor.YELLOW + "You are the only member of " + guild.getName() +
                             ". Leaving will disband the guild and destroy all claim banners. Enter '/guild leave' again to confirm");
                     pendingGuildDisbanding.add(guild);
@@ -117,7 +118,7 @@ public class GuildCommand implements CommandExecutor {
             }
             case "invite" -> {
                 Guild guild = BannerClaim.getGuildManager().guildOfPlayer(player.getUniqueId());
-                if(guild == null) {
+                if (guild == null) {
                     player.sendMessage(ChatColor.RED + "You are not part of a guild");
                     return true;
                 }
@@ -126,12 +127,12 @@ public class GuildCommand implements CommandExecutor {
                     return true;
                 }
                 Player invitedPlayer = Bukkit.getPlayer(args[1]);
-                if(invitedPlayer == null) {
+                if (invitedPlayer == null) {
                     player.sendMessage(ChatColor.RED + "That player is not online right now");
                     return true;
                 }
                 Guild invitedPlayerExistingGuild = BannerClaim.getGuildManager().guildOfPlayer(player.getUniqueId());
-                if(invitedPlayerExistingGuild != null) {
+                if (invitedPlayerExistingGuild != null) {
                     player.sendMessage(ChatColor.RED + "That player already part of the guild " + invitedPlayerExistingGuild.getName());
                     return true;
                 }
@@ -140,19 +141,19 @@ public class GuildCommand implements CommandExecutor {
                 return true;
             }
             case "join" -> {
-                if(args.length < 2) {
+                if (args.length < 2) {
                     player.sendMessage(ChatColor.RED + "You need to specify a guild to join");
                     return true;
                 }
                 Guild invitedGuild = BannerClaim.getGuildManager().getGuildByName(args[1]);
-                if(invitedGuild == null) {
+                if (invitedGuild == null) {
                     player.sendMessage(ChatColor.RED + "That guild does not exist");
                     return true;
                 }
 
-                for(int i = 0; i < this.playerGuildInvites.size(); i++) {
+                for (int i = 0; i < this.playerGuildInvites.size(); i++) {
                     PlayerGuildInvite playerGuildInvite = this.playerGuildInvites.get(i);
-                    if(playerGuildInvite.playerId().equals(player.getUniqueId()) && playerGuildInvite.guild() == invitedGuild) {
+                    if (playerGuildInvite.playerId().equals(player.getUniqueId()) && playerGuildInvite.guild() == invitedGuild) {
                         player.sendMessage(ChatColor.GREEN + "You joined " + invitedGuild.getName());
                         invitedGuild.addMember(player.getUniqueId());
                         playerGuildInvites.remove(playerGuildInvite);

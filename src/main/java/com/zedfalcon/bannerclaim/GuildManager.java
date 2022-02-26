@@ -14,12 +14,15 @@ public class GuildManager {
         this.guilds = new ArrayList<>();
     }
 
-    public void forEachGuild(Consumer<Guild> consumer) {this.guilds.forEach(consumer);}
+    public void forEachGuild(Consumer<Guild> consumer) {
+        this.guilds.forEach(consumer);
+    }
 
     public void addGuild(Guild guildToAdd) {
         this.guilds.add(guildToAdd);
         GuildFileStorage.saveGuild(guildToAdd);
     }
+
     public void removeGuild(Guild guildToRemove) {
         guildToRemove.delete();
         this.guilds.remove(guildToRemove);
@@ -42,9 +45,9 @@ public class GuildManager {
     }
 
     public GuildClaimPair guildAndClaimFromRegion(ProtectedRegion region) {
-        for(Guild guild : this.guilds) {
+        for (Guild guild : this.guilds) {
             Claim claim = guild.claimFromRegion(region);
-            if(claim != null) {
+            if (claim != null) {
                 return new GuildClaimPair(guild, claim);
             }
         }

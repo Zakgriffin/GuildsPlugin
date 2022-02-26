@@ -8,7 +8,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,7 +39,7 @@ public class BannerPlaceListener implements Listener {
         Optional<ClaimBannerTier> optionalTier = Arrays.stream(BannerClaim.CLAIM_BANNER_TIERS)
                 .filter(c -> c.banner() == heldItemStack.getType()).findAny();
 
-        if(optionalTier.isEmpty()) return;
+        if (optionalTier.isEmpty()) return;
         ClaimBannerTier tier = optionalTier.get();
 
         Block bannerBlock = e.getBlockPlaced();
