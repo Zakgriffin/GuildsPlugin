@@ -1,0 +1,13 @@
+name: BannerClaim
+version: '${project.version}'
+main: com.zedfalcon.bannerclaim.BannerClaim
+depend: [WorldGuard]
+api-version: 1.18
+authors: [ ZedFalcon ]
+commands:
+  giveClaimBanner:
+    description: Give player a claim banner
+    usage: /<command>
+  guild:
+    description: Do guild stuff
+    usage: /<command>
