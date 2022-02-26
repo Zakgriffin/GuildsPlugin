@@ -27,7 +27,7 @@ public class GuildFileStorage {
     public static void loadAllGuilds() {
         guildsDir = new File(PLUGIN.getDataFolder(), GUILD_STORAGE_DIR);
         if (!guildsDir.exists()) {
-            guildsDir.mkdir();
+            guildsDir.mkdir(); // TODO why warning?
         }
 
         File[] files = guildsDir.listFiles((dir, name) -> name.startsWith(GUILD_FILE_PREFIX));
@@ -82,7 +82,11 @@ public class GuildFileStorage {
             assert regions != null;
             ProtectedRegion region = regions.getRegion(regionID);
 
-            claims.add(new Claim(region, bannerLocation));
+            // tier
+            String tierName = claimObj.get("tier").getAsString();
+            ClaimBannerTier tier = BannerClaim.claimBannerTierFromName(tierName);
+
+            claims.add(new Claim(region, bannerLocation, tier));
         }
 
         return new Guild(id, name, members, claims);
@@ -97,7 +101,7 @@ public class GuildFileStorage {
             String id = guild.getId().toString();
             File file = new File(guildsDir, GUILD_FILE_PREFIX + id + ".json");
             if (!file.exists()) {
-                file.createNewFile(); // ???
+                file.createNewFile(); // TODO why warning?
             }
 
             FileWriter writer = new FileWriter(file);
@@ -113,7 +117,7 @@ public class GuildFileStorage {
         String id = guild.getId().toString();
         File file = new File(guildsDir, GUILD_FILE_PREFIX + id + ".json");
         if (file.exists()) {
-            file.delete(); // ???
+            file.delete(); // TODO why warning?
         }
     }
 
@@ -148,6 +152,9 @@ public class GuildFileStorage {
 
             // region
             claimObj.add("region", new JsonPrimitive(claim.getRegion().getId()));
+
+            // tier
+            claimObj.add("tier", new JsonPrimitive(claim.tier().name()));
 
             claimsArr.add(claimObj);
         });

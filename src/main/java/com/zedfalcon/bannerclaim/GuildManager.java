@@ -41,9 +41,13 @@ public class GuildManager {
         return getGuildByName(guildName) != null;
     }
 
-    public Guild guildOwningRegion(ProtectedRegion region) {
-        return this.guilds.stream().filter(g -> g.ownsRegion(region))
-                .findFirst()
-                .orElse(null);
+    public GuildClaimPair guildAndClaimFromRegion(ProtectedRegion region) {
+        for(Guild guild : this.guilds) {
+            Claim claim = guild.claimFromRegion(region);
+            if(claim != null) {
+                return new GuildClaimPair(guild, claim);
+            }
+        }
+        return null;
     }
 }

@@ -59,7 +59,7 @@ public class BannerPlaceListener implements Listener {
             }
         }
 
-        Claim claim = new Claim(claimRegion, bannerBlock);
+        Claim claim = new Claim(claimRegion, bannerBlock, tier);
         guild.addClaim(claim);
 
         player.sendMessage(ChatColor.GREEN + "" + tier.claimWidth() + "x" + tier.claimWidth() + " claim created for " + guild.getName());

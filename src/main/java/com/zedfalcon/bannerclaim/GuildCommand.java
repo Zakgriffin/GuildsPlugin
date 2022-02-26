@@ -11,10 +11,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-record ClaimBannerTier(String name, int claimWidth, int price, Material banner, ChatColor chatColor,
-                       Material highlightGlassPane) {
-}
-
 record PlayerGuildInvite(UUID playerId, Guild guild) {}
 
 public class GuildCommand implements CommandExecutor {

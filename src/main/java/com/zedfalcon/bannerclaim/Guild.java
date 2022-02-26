@@ -67,7 +67,7 @@ public class Guild {
         markUnsaved();
     }
 
-    private void removeClaim(Claim claim) {
+    public void removeClaim(Claim claim) {
         RegionManager regions = BannerClaim.getRegionContainer().get(BukkitAdapter.adapt(claim.getBannerBlock().getWorld()));
         assert regions != null;
         regions.removeRegion(claim.getRegion().getId());
@@ -75,18 +75,8 @@ public class Guild {
         markUnsaved();
     }
 
-    public boolean removeClaimIfBannerBrokenAt(Block block) {
-        for (Claim claim : claims) {
-            if (claim.getBannerBlock().equals(block)) {
-                this.removeClaim(claim);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean ownsRegion(ProtectedRegion region) {
-        return this.claims.stream().anyMatch(c -> c.getRegion() == region);
+    public Claim claimFromRegion(ProtectedRegion region) {
+        return this.claims.stream().filter(c -> c.getRegion() == region).findAny().orElse(null);
     }
 
     private void markUnsaved() {

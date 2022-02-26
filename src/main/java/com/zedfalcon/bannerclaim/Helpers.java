@@ -11,6 +11,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Set;
 import java.util.function.Consumer;
 
+record GuildClaimPair(Guild guild, Claim claim) {}
+
+
 public class Helpers {
     public static int countItems(Player player, Material material) {
         int count = 0;

@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class BannerClaim extends JavaPlugin {
@@ -20,6 +21,10 @@ public final class BannerClaim extends JavaPlugin {
             new ClaimBannerTier("Purple", 80, 75, Material.PURPLE_BANNER, ChatColor.DARK_PURPLE, Material.PURPLE_STAINED_GLASS_PANE),
             new ClaimBannerTier("Gold", 112, 150, Material.ORANGE_BANNER, ChatColor.GOLD, Material.ORANGE_STAINED_GLASS_PANE),
     };
+
+    public static ClaimBannerTier claimBannerTierFromName(String name) {
+        return Arrays.stream(CLAIM_BANNER_TIERS).filter(t -> t.name().equals(name)).findAny().orElse(null);
+    }
 
     public static BannerClaim getPlugin() {
         return BannerClaim.PLUGIN;
