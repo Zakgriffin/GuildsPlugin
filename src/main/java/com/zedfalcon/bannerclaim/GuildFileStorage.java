@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class GuildFileStorage {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -27,7 +29,9 @@ public class GuildFileStorage {
     public static void loadAllGuilds() {
         guildsDir = new File(PLUGIN.getDataFolder(), GUILD_STORAGE_DIR);
         if (!guildsDir.exists()) {
-            guildsDir.mkdir(); // TODO why warning?
+            if(!guildsDir.mkdir()) {
+                Bukkit.getLogger().log(Level.WARNING, "failed to create guilds directory");
+            }
         }
 
         File[] files = guildsDir.listFiles((dir, name) -> name.startsWith(GUILD_FILE_PREFIX));
@@ -101,7 +105,9 @@ public class GuildFileStorage {
             String id = guild.getId().toString();
             File file = new File(guildsDir, GUILD_FILE_PREFIX + id + ".json");
             if (!file.exists()) {
-                file.createNewFile(); // TODO why warning?
+                if(!file.createNewFile()) {
+                    Bukkit.getLogger().log(Level.WARNING, "failed to create a guild file");
+                }
             }
 
             FileWriter writer = new FileWriter(file);
@@ -117,7 +123,9 @@ public class GuildFileStorage {
         String id = guild.getId().toString();
         File file = new File(guildsDir, GUILD_FILE_PREFIX + id + ".json");
         if (file.exists()) {
-            file.delete(); // TODO why warning?
+            if(!file.delete()) {
+                Bukkit.getLogger().log(Level.WARNING, "failed to delete a guild file");
+            }
         }
     }
 
