@@ -19,14 +19,20 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-public class BannerPlaceListener implements Listener {
+public class PlaceClaimBannerListener implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
         ItemStack heldItemStack = e.getItemInHand();
         if (!Tag.BANNERS.isTagged(heldItemStack.getType())) return;
         ItemMeta itemMeta = heldItemStack.getItemMeta();
-        if (itemMeta == null || !itemMeta.getLocalizedName().contains(BannerClaim.CLAIM_BANNER_NAME_PREFIX)) return;
+        if (itemMeta == null) return;
+
+        Optional<ClaimBannerTier> optionalTier = Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS)
+                .filter(c -> heldItemStack.getItemMeta().getDisplayName().equals(c.displayName())).findAny();
+
+        if (optionalTier.isEmpty()) return;
+        ClaimBannerTier tier = optionalTier.get();
 
         e.setCancelled(true);
 
@@ -35,12 +41,6 @@ public class BannerPlaceListener implements Listener {
             player.sendMessage(ChatColor.RED + "You cannot claim since you are not part of a guild");
             return;
         }
-
-        Optional<ClaimBannerTier> optionalTier = Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS)
-                .filter(c -> heldItemStack.getItemMeta().getLocalizedName().contains(c.name())).findAny();
-
-        if (optionalTier.isEmpty()) return;
-        ClaimBannerTier tier = optionalTier.get();
 
         Block bannerBlock = e.getBlockPlaced();
         World world = bannerBlock.getWorld();

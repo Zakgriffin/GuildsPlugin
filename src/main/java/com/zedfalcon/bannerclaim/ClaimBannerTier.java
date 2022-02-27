@@ -26,23 +26,28 @@ record ClaimBannerTier(
             new ClaimBannerTier("Gold", 112, 150, DyeColor.YELLOW, ChatColor.YELLOW, Material.YELLOW_STAINED_GLASS_PANE),
     };
 
-    public static ItemStack createClaimBanner(ClaimBannerTier tier) {
+    public String displayName() {
+        return chatColor + name + " Claim Banner";
+    }
+
+    public ItemStack createClaimBanner() {
         ItemStack claimBanner = new ItemStack(Material.BLACK_BANNER);
 
         BannerMeta meta = (BannerMeta) claimBanner.getItemMeta();
         assert meta != null;
+
         List<Pattern> patterns = new ArrayList<>();
-        patterns.add(new Pattern(tier.dyeColor, PatternType.RHOMBUS_MIDDLE));
+        patterns.add(new Pattern(dyeColor, PatternType.RHOMBUS_MIDDLE));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.SKULL));
-        patterns.add(new Pattern(tier.dyeColor, PatternType.BORDER));
+        patterns.add(new Pattern(dyeColor, PatternType.BORDER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.BORDER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.STRAIGHT_CROSS));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.FLOWER));
         patterns.add(new Pattern(DyeColor.BLACK, PatternType.TRIANGLE_TOP));
         meta.setPatterns(patterns);
 
-        meta.setLocalizedName(BannerClaim.CLAIM_BANNER_NAME_PREFIX + tier.name());
-        meta.setDisplayName(tier.chatColor() + tier.name() + " Claim Banner");
+        meta.setDisplayName(displayName());
+
         claimBanner.setItemMeta(meta);
         return claimBanner;
     }

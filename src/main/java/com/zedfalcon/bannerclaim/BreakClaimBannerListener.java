@@ -39,17 +39,6 @@ public class BreakClaimBannerListener implements Listener {
             if (!claim.bannerBlock().equals(block)) continue;
 
             guild.removeClaim(claim);
-            // TODO OH NO NO NO NO NO NO
-            Bukkit.getScheduler().runTaskLater(BannerClaim.getPlugin(), () -> {
-                Collection<Entity> nearbyItems = world.getNearbyEntities(block.getLocation(), 1, 1, 1, (e) -> e instanceof Item);
-                for (Entity entity : nearbyItems) {
-                    if (entity.getName().contains("Banner") && entity.getTicksLived() == 0) {
-                        entity.remove();
-                        break;
-                    }
-                }
-                world.dropItemNaturally(block.getLocation(), new ItemStack(ClaimBannerTier.createClaimBanner(claim.tier())));
-            }, 0);
 
             world.playSound(block.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1f);
             Helpers.forChunksInRadius(block, 1, (chunk) -> {

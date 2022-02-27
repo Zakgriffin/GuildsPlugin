@@ -84,7 +84,7 @@ public class GuildCommand implements CommandExecutor {
 
                     Helpers.removeItemsByCount(player, Material.DIAMOND, tier.price());
 
-                    ItemStack claimBanner = ClaimBannerTier.createClaimBanner(tier);
+                    ItemStack claimBanner = tier.createClaimBanner();
                     player.getInventory().addItem(claimBanner);
 
                     player.sendMessage(tier.chatColor() + tier.name() + ChatColor.GREEN + " claim banner purchased");

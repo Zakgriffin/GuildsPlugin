@@ -3,9 +3,6 @@ package com.zedfalcon.bannerclaim;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -15,7 +12,6 @@ public final class BannerClaim extends JavaPlugin {
     private static BannerClaim PLUGIN;
     private static RegionContainer REGION_CONTAINER;
     private static GuildManager GUILD_MANAGER;
-    public static final String CLAIM_BANNER_NAME_PREFIX = "claimBanner-";
 
     public static ClaimBannerTier claimBannerTierFromName(String name) {
         return Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS).filter(t -> t.name().equals(name)).findAny().orElse(null);
@@ -43,8 +39,9 @@ public final class BannerClaim extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        super.getServer().getPluginManager().registerEvents(new BannerPlaceListener(), this);
+        super.getServer().getPluginManager().registerEvents(new PlaceClaimBannerListener(), this);
         super.getServer().getPluginManager().registerEvents(new BreakClaimBannerListener(), this);
+        super.getServer().getPluginManager().registerEvents(new PreventRenameClaimBannerListener(), this);
 
         Objects.requireNonNull(super.getCommand("guild")).setExecutor(new GuildCommand());
 
