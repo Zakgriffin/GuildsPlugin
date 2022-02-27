@@ -3,6 +3,7 @@ package com.zedfalcon.bannerclaim;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,13 +34,13 @@ public class Guild {
         this.name = name;
     }
 
-    public void addMember(UUID memberToAdd) {
-        this.members.add(memberToAdd);
+    public void addMember(Player memberToAdd) {
+        this.members.add(memberToAdd.getUniqueId());
         markUnsaved();
     }
 
-    public void removeMember(UUID memberToRemove) {
-        this.members.remove(memberToRemove);
+    public void removeMember(Player memberToRemove) {
+        this.members.remove(memberToRemove.getUniqueId());
         markUnsaved();
     }
 

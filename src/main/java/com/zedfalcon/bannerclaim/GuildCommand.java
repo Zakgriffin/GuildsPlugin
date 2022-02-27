@@ -52,9 +52,8 @@ public class GuildCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "A guild by that name already exists");
                     return true;
                 }
-                List<UUID> members = new ArrayList<>();
-                members.add(player.getUniqueId());
-                Guild guild = new Guild(UUID.randomUUID(), guildName, members, new ArrayList<>());
+                Guild guild = new Guild(UUID.randomUUID(), guildName, new ArrayList<>(), new ArrayList<>());
+                guild.addMember(player);
                 BannerClaim.getGuildManager().addGuild(guild);
                 player.sendMessage(ChatColor.GREEN + "Guild '" + guildName + "' created");
                 return true;
@@ -107,7 +106,7 @@ public class GuildCommand implements CommandExecutor {
                     return true;
                 }
                 if (pendingGuildDisbanding.contains(guild)) {
-                    guild.removeMember(player.getUniqueId());
+                    guild.removeMember(player);
                     BannerClaim.getGuildManager().removeGuild(guild);
                     player.sendMessage(ChatColor.GREEN + "" + guild.getName() + " has been disbanded. All claim banners have been broken");
                     pendingGuildDisbanding.remove(guild);
@@ -121,7 +120,7 @@ public class GuildCommand implements CommandExecutor {
                             () -> pendingGuildDisbanding.remove(guild), 60 * 20);
                     return true;
                 }
-                guild.removeMember(player.getUniqueId());
+                guild.removeMember(player);
                 player.sendMessage(ChatColor.GREEN + "You have left " + guild.getName());
                 return true;
             }
@@ -164,7 +163,7 @@ public class GuildCommand implements CommandExecutor {
                     PlayerGuildInvite playerGuildInvite = this.playerGuildInvites.get(i);
                     if (playerGuildInvite.playerId().equals(player.getUniqueId()) && playerGuildInvite.guild() == invitedGuild) {
                         player.sendMessage(ChatColor.GREEN + "You joined " + invitedGuild.getName());
-                        invitedGuild.addMember(player.getUniqueId());
+                        invitedGuild.addMember(player);
                         playerGuildInvites.remove(playerGuildInvite);
                         pendingGuildDisbanding.remove(invitedGuild);
                         return true;
