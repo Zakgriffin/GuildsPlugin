@@ -43,11 +43,12 @@ public class BreakClaimBannerListener implements Listener {
             Bukkit.getScheduler().runTaskLater(BannerClaim.getPlugin(), () -> {
                 Collection<Entity> nearbyItems = world.getNearbyEntities(block.getLocation(), 1, 1, 1, (e) -> e instanceof Item);
                 for (Entity entity : nearbyItems) {
-                    if (entity.getName().contains("Banner")) {
+                    if (entity.getName().contains("Banner") && entity.getTicksLived() == 0) {
                         entity.remove();
+                        break;
                     }
                 }
-                world.dropItemNaturally(block.getLocation(), new ItemStack(Helpers.createClaimBanner(claim.tier())));
+                world.dropItemNaturally(block.getLocation(), new ItemStack(ClaimBannerTier.createClaimBanner(claim.tier())));
             }, 0);
 
             world.playSound(block.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1f);

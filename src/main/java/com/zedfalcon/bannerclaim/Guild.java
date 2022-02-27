@@ -58,24 +58,24 @@ public class Guild {
     public void addClaim(Claim claim) {
         this.claims.add(claim);
         for (UUID playerUUID : this.members) {
-            claim.getRegion().getMembers().addPlayer(playerUUID);
+            claim.region().getMembers().addPlayer(playerUUID);
         }
-        RegionManager regions = BannerClaim.getRegionContainer().get(BukkitAdapter.adapt(claim.getBannerBlock().getWorld()));
+        RegionManager regions = BannerClaim.getRegionContainer().get(BukkitAdapter.adapt(claim.bannerBlock().getWorld()));
         assert regions != null;
-        regions.addRegion(claim.getRegion());
+        regions.addRegion(claim.region());
         markUnsaved();
     }
 
     public void removeClaim(Claim claim) {
-        RegionManager regions = BannerClaim.getRegionContainer().get(BukkitAdapter.adapt(claim.getBannerBlock().getWorld()));
+        RegionManager regions = BannerClaim.getRegionContainer().get(BukkitAdapter.adapt(claim.bannerBlock().getWorld()));
         assert regions != null;
-        regions.removeRegion(claim.getRegion().getId());
+        regions.removeRegion(claim.region().getId());
         this.claims.remove(claim);
         markUnsaved();
     }
 
     public Claim claimFromRegion(ProtectedRegion region) {
-        return this.claims.stream().filter(c -> c.getRegion() == region).findAny().orElse(null);
+        return this.claims.stream().filter(c -> c.region() == region).findAny().orElse(null);
     }
 
     private void markUnsaved() {
@@ -88,7 +88,7 @@ public class Guild {
 
     public void delete() {
         for (int i = claims.size() - 1; i >= 0; i--) {
-            this.claims.get(i).getBannerBlock().breakNaturally();
+            this.claims.get(i).bannerBlock().breakNaturally();
         }
     }
 }

@@ -150,7 +150,7 @@ public class GuildFileStorage {
 
             // bannerLocation
             JsonObject bannerLocationObj = new JsonObject();
-            Block bannerLocation = claim.getBannerBlock();
+            Block bannerLocation = claim.bannerBlock();
             World world = bannerLocation.getWorld();
             bannerLocationObj.add("x", new JsonPrimitive(bannerLocation.getX()));
             bannerLocationObj.add("y", new JsonPrimitive(bannerLocation.getY()));
@@ -159,7 +159,7 @@ public class GuildFileStorage {
             claimObj.add("bannerLocation", bannerLocationObj);
 
             // region
-            claimObj.add("region", new JsonPrimitive(claim.getRegion().getId()));
+            claimObj.add("region", new JsonPrimitive(claim.region().getId()));
 
             // tier
             claimObj.add("tier", new JsonPrimitive(claim.tier().name()));

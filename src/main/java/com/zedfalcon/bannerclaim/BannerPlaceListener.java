@@ -36,8 +36,8 @@ public class BannerPlaceListener implements Listener {
             return;
         }
 
-        Optional<ClaimBannerTier> optionalTier = Arrays.stream(BannerClaim.CLAIM_BANNER_TIERS)
-                .filter(c -> c.banner() == heldItemStack.getType()).findAny();
+        Optional<ClaimBannerTier> optionalTier = Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS)
+                .filter(c -> heldItemStack.getItemMeta().getLocalizedName().contains(c.name())).findAny();
 
         if (optionalTier.isEmpty()) return;
         ClaimBannerTier tier = optionalTier.get();

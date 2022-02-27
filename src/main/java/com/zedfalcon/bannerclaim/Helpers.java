@@ -49,14 +49,4 @@ public class Helpers {
             }
         }
     }
-
-    public static ItemStack createClaimBanner(ClaimBannerTier tier) {
-        ItemStack claimBanner = new ItemStack(tier.banner());
-        ItemMeta meta = claimBanner.getItemMeta();
-        assert meta != null;
-        meta.setLocalizedName(BannerClaim.CLAIM_BANNER_NAME_PREFIX + tier.name());
-        meta.setDisplayName(tier.chatColor() + tier.name() + " Claim Banner");
-        claimBanner.setItemMeta(meta);
-        return claimBanner;
-    }
 }

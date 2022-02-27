@@ -4,6 +4,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,15 +16,9 @@ public final class BannerClaim extends JavaPlugin {
     private static RegionContainer REGION_CONTAINER;
     private static GuildManager GUILD_MANAGER;
     public static final String CLAIM_BANNER_NAME_PREFIX = "claimBanner-";
-    public static final ClaimBannerTier[] CLAIM_BANNER_TIERS = new ClaimBannerTier[]{
-            new ClaimBannerTier("White", 16, 3, Material.WHITE_BANNER, ChatColor.WHITE, Material.WHITE_STAINED_GLASS_PANE),
-            new ClaimBannerTier("Blue", 48, 25, Material.BLUE_BANNER, ChatColor.BLUE, Material.BLUE_STAINED_GLASS_PANE),
-            new ClaimBannerTier("Purple", 80, 75, Material.PURPLE_BANNER, ChatColor.DARK_PURPLE, Material.PURPLE_STAINED_GLASS_PANE),
-            new ClaimBannerTier("Gold", 112, 150, Material.ORANGE_BANNER, ChatColor.GOLD, Material.ORANGE_STAINED_GLASS_PANE),
-    };
 
     public static ClaimBannerTier claimBannerTierFromName(String name) {
-        return Arrays.stream(CLAIM_BANNER_TIERS).filter(t -> t.name().equals(name)).findAny().orElse(null);
+        return Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS).filter(t -> t.name().equals(name)).findAny().orElse(null);
     }
 
     public static BannerClaim getPlugin() {

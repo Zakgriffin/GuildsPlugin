@@ -61,7 +61,7 @@ public class GuildCommand implements CommandExecutor {
             case "buyClaimBanner" -> {
                 if (args.length < 2) {
                     player.sendMessage(ChatColor.RED + "Please specify a claim banner tier from these:");
-                    for (ClaimBannerTier c : BannerClaim.CLAIM_BANNER_TIERS) {
+                    for (ClaimBannerTier c : ClaimBannerTier.CLAIM_BANNER_TIERS) {
                         player.sendMessage("" + c.chatColor() + c.name() + " - " +
                                 c.claimWidth() + "x" + c.claimWidth() +
                                 " Claim - " + c.price() + " Diamonds");
@@ -70,7 +70,7 @@ public class GuildCommand implements CommandExecutor {
                 }
 
                 String tierName = args[1].strip().toLowerCase();
-                Optional<ClaimBannerTier> optionClaimBannerTier = Arrays.stream(BannerClaim.CLAIM_BANNER_TIERS)
+                Optional<ClaimBannerTier> optionClaimBannerTier = Arrays.stream(ClaimBannerTier.CLAIM_BANNER_TIERS)
                         .filter(t -> t.name().toLowerCase().equals(tierName)).findAny();
 
                 if (optionClaimBannerTier.isEmpty()) {
@@ -84,7 +84,7 @@ public class GuildCommand implements CommandExecutor {
 
                     Helpers.removeItemsByCount(player, Material.DIAMOND, tier.price());
 
-                    ItemStack claimBanner = Helpers.createClaimBanner(tier);
+                    ItemStack claimBanner = ClaimBannerTier.createClaimBanner(tier);
                     player.getInventory().addItem(claimBanner);
 
                     player.sendMessage(tier.chatColor() + tier.name() + ChatColor.GREEN + " claim banner purchased");
