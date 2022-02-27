@@ -33,7 +33,7 @@ public class GuildCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "You are not part of a guild");
                 return true;
             }
-            player.sendMessage(ChatColor.GREEN + "You have a member of " + guild.getName());
+            player.sendMessage(ChatColor.GREEN + "You are a member of " + guild.getName());
             return true;
         }
 
