@@ -2,6 +2,7 @@ package com.zedfalcon.bannerclaim;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -75,20 +76,28 @@ public class GuildCommand implements CommandExecutor {
 
                 if (optionClaimBannerTier.isEmpty()) {
                     player.sendMessage(ChatColor.RED + "That is not a valid claim banner tier");
-                } else {
-                    ClaimBannerTier tier = optionClaimBannerTier.get();
-                    if (Helpers.countItems(player, Material.DIAMOND) < tier.price()) {
-                        player.sendMessage(ChatColor.RED + "You do not have " + tier.price() + " diamonds");
-                        return true;
-                    }
+                    return true;
+                }
+                ClaimBannerTier tier = optionClaimBannerTier.get();
 
-                    Helpers.removeItemsByCount(player, Material.DIAMOND, tier.price());
-
+                if(player.getGameMode() == GameMode.CREATIVE) {
                     ItemStack claimBanner = tier.createClaimBanner();
                     player.getInventory().addItem(claimBanner);
-
-                    player.sendMessage(tier.chatColor() + tier.name() + ChatColor.GREEN + " claim banner purchased");
+                    player.sendMessage(tier.chatColor() + tier.name() + ChatColor.GREEN + " claim banner given");
+                    return true;
                 }
+
+                if (Helpers.countItems(player, Material.DIAMOND) < tier.price()) {
+                    player.sendMessage(ChatColor.RED + "You do not have " + tier.price() + " diamonds");
+                    return true;
+                }
+
+                Helpers.removeItemsByCount(player, Material.DIAMOND, tier.price());
+
+                ItemStack claimBanner = tier.createClaimBanner();
+                player.getInventory().addItem(claimBanner);
+
+                player.sendMessage(tier.chatColor() + tier.name() + ChatColor.GREEN + " claim banner purchased");
                 return true;
             }
             case "leave" -> {

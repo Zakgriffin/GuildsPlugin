@@ -30,7 +30,6 @@ public final class BannerClaim extends JavaPlugin {
     }
 
     public WorldGuardPlugin worldGuardPlugin;
-//    private File configFile;
 
     public BannerClaim() {
         BannerClaim.PLUGIN = this;
